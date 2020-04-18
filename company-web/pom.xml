@@ -44,7 +44,7 @@
       <!-- Dependency on the EJB module so we can use it's services if needed -->
       <dependency>
          <groupId>pl.patrykbober.soa</groupId>
-         <artifactId>company-ejb</artifactId>
+         <artifactId>soap-api</artifactId>
          <type>ejb</type>
          <scope>provided</scope>
       </dependency>

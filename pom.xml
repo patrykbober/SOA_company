@@ -33,7 +33,7 @@
         </license>
     </licenses>
     <modules>
-        <module>company-ejb</module>
+        <module>soap-api</module>
         <module>company-web</module>
         <module>company-ear</module>
     </modules>
@@ -73,7 +73,7 @@
                 to repeat ourselves in every module -->
             <dependency>
                 <groupId>pl.patrykbober.soa</groupId>
-                <artifactId>company-ejb</artifactId>
+                <artifactId>soap-api</artifactId>
                 <version>${project.version}</version>
                 <type>ejb</type>
             </dependency>

@@ -49,7 +49,7 @@
         </dependency>
         <dependency>
             <groupId>pl.patrykbober.soa</groupId>
-            <artifactId>company-ejb</artifactId>
+            <artifactId>soap-api</artifactId>
             <type>ejb</type>
             <exclusions>
                 <exclusion>
