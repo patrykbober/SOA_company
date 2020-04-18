@@ -59,13 +59,13 @@ public class CompanyService {
     public ListCompaniesResponse findAll(ListCompaniesRequest request) {
         CompanyFilter filter = request.getFilter();
         List<Company> companyList = companies;
-        if (filter.getId() != null) {
+        if (filter != null && filter.getId() != null) {
             companyList = companyList.stream().filter(c -> filter.getId().equals(c.getId())).collect(Collectors.toList());
         }
-        if (filter.getName() != null) {
+        if (filter != null && filter.getName() != null) {
             companyList = companyList.stream().filter(c -> filter.getName().equals(c.getName())).collect(Collectors.toList());
         }
-        if (filter.getCity() != null) {
+        if (filter != null && filter.getCity() != null) {
             companyList = companyList.stream().filter(c -> filter.getCity().equals(c.getCity())).collect(Collectors.toList());
         }
         return ListCompaniesResponse.builder().companies(companyList).build();
