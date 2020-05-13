@@ -25,7 +25,7 @@
       <version>1.0-SNAPSHOT</version>
    </parent>
 
-   <artifactId>company-web</artifactId>
+   <artifactId>rest-api</artifactId>
    <packaging>war</packaging>
 
    <name>company: WAR Module</name>
@@ -44,9 +44,8 @@
       <!-- Dependency on the EJB module so we can use it's services if needed -->
       <dependency>
          <groupId>pl.patrykbober.soa</groupId>
-         <artifactId>soap-api</artifactId>
+         <artifactId>company-model</artifactId>
          <type>ejb</type>
-         <scope>provided</scope>
       </dependency>
 
       <!-- Import the JAX-RS API, we use provided scope as the API is included in JBoss WildFly -->
@@ -60,6 +59,13 @@
       <dependency>
          <groupId>javax.enterprise</groupId>
          <artifactId>cdi-api</artifactId>
+         <scope>provided</scope>
+      </dependency>
+
+      <!-- Import the EJB API, we use provided scope as the API is included in JBoss WildFly -->
+      <dependency>
+         <groupId>org.jboss.spec.javax.ejb</groupId>
+         <artifactId>jboss-ejb-api_3.2_spec</artifactId>
          <scope>provided</scope>
       </dependency>
       

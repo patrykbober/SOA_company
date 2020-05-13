@@ -33,8 +33,9 @@
         </license>
     </licenses>
     <modules>
+        <module>company-model</module>
         <module>soap-api</module>
-        <module>company-web</module>
+        <module>rest-api</module>
         <module>company-ear</module>
         <module>soap-connector</module>
     </modules>
@@ -74,6 +75,13 @@
                 to repeat ourselves in every module -->
             <dependency>
                 <groupId>pl.patrykbober.soa</groupId>
+                <artifactId>company-model</artifactId>
+                <version>${project.version}</version>
+                <type>ejb</type>
+            </dependency>
+
+            <dependency>
+                <groupId>pl.patrykbober.soa</groupId>
                 <artifactId>soap-api</artifactId>
                 <version>${project.version}</version>
                 <type>ejb</type>
@@ -91,7 +99,7 @@
                 ourselves in every module -->
             <dependency>
                 <groupId>pl.patrykbober.soa</groupId>
-                <artifactId>company-web</artifactId>
+                <artifactId>rest-api</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
                 <scope>compile</scope>

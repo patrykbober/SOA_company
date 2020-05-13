@@ -44,6 +44,13 @@
         <!-- Declare the APIs we depend on and need for compilation. All of 
             them are provided by JBoss WildFly -->
 
+        <dependency>
+            <groupId>pl.patrykbober.soa</groupId>
+            <artifactId>company-model</artifactId>
+            <version>${project.version}</version>
+            <type>ejb</type>
+        </dependency>
+
         <!-- Import the EJB API, we use provided scope as the API is included in JBoss WildFly -->
         <dependency>
             <groupId>org.jboss.spec.javax.ejb</groupId>
