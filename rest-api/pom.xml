@@ -39,6 +39,13 @@
       </license>
    </licenses>
 
+   <properties>
+      <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
+      <replacer.version>1.5.3</replacer.version>
+      <swagger-ui.version>3.25.2</swagger-ui.version>
+      <swagger.version>1.6.1</swagger.version>
+   </properties>
+
    <dependencies>
 
       <!-- Dependency on the EJB module so we can use it's services if needed -->
@@ -83,7 +90,14 @@
          <scope>provided</scope>
       </dependency>
 
-       <!-- JSR-303 (Bean Validation) Implementation -->
+      <!-- Swagger -->
+      <dependency>
+         <groupId>io.swagger</groupId>
+         <artifactId>swagger-jersey2-jaxrs</artifactId>
+         <version>${swagger.version}</version>
+      </dependency>
+
+      <!-- JSR-303 (Bean Validation) Implementation -->
        <!-- Provides portable constraints such as @Email -->
        <!-- Hibernate Validator is shipped in JBoss WildFly -->
        <dependency>
@@ -104,11 +118,67 @@
       <finalName>${project.artifactId}</finalName>
       <plugins>
          <plugin>
+            <!-- Download Swagger UI webjar. -->
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>${maven-dependency-plugin.version}</version>
+            <executions>
+               <execution>
+                  <phase>prepare-package</phase>
+                  <goals>
+                     <goal>unpack</goal>
+                  </goals>
+                  <configuration>
+                     <artifactItems>
+                        <artifactItem>
+                           <groupId>org.webjars</groupId>
+                           <artifactId>swagger-ui</artifactId>
+                           <version>${swagger-ui.version}</version>
+                        </artifactItem>
+                     </artifactItems>
+                     <outputDirectory>${project.build.directory}/swagger-ui</outputDirectory>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+         <plugin>
             <artifactId>maven-war-plugin</artifactId>
             <version>${version.war.plugin}</version>
             <configuration>
                <!-- Java EE 7 doesn't require web.xml, Maven needs to catch up! -->
                <failOnMissingWebXml>false</failOnMissingWebXml>
+
+               <webResources combine.children="append">
+                  <resource>
+                     <directory>${project.build.directory}/swagger-ui/META-INF/resources/webjars/swagger-ui/${swagger-ui.version}</directory>
+                     <includes>
+                        <include>**/*.*</include>
+                     </includes>
+                     <targetPath>swagger-ui</targetPath>
+                  </resource>
+               </webResources>
+            </configuration>
+         </plugin>
+         <plugin>
+            <!-- Replace the OpenAPI specification example URL with the local one. -->
+            <groupId>com.google.code.maven-replacer-plugin</groupId>
+            <artifactId>replacer</artifactId>
+            <version>${replacer.version}</version>
+            <executions>
+               <execution>
+                  <phase>prepare-package</phase>
+                  <goals>
+                     <goal>replace</goal>
+                  </goals>
+               </execution>
+            </executions>
+            <configuration>
+               <file>${project.build.directory}/swagger-ui/META-INF/resources/webjars/swagger-ui/${swagger-ui.version}/index.html</file>
+               <replacements>
+                  <replacement>
+                     <token>https://petstore.swagger.io/v2/swagger.json</token>
+                     <value>/rest-api/api/swagger.json</value>
+                  </replacement>
+               </replacements>
             </configuration>
          </plugin>
       </plugins>
