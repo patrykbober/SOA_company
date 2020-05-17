@@ -48,7 +48,6 @@
 
    <dependencies>
 
-      <!-- Dependency on the EJB module so we can use it's services if needed -->
       <dependency>
          <groupId>pl.patrykbober.soa</groupId>
          <artifactId>company-model</artifactId>
@@ -88,6 +87,12 @@
          <groupId>org.hibernate.javax.persistence</groupId>
          <artifactId>hibernate-jpa-2.1-api</artifactId>
          <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>jboss</groupId>
+         <artifactId>jboss-annotations-ejb3</artifactId>
+         <version>4.2.2.GA</version>
       </dependency>
 
       <!-- Swagger -->
