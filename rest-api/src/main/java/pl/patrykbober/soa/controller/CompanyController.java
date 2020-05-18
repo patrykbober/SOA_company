@@ -3,6 +3,7 @@ package pl.patrykbober.soa.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NoArgsConstructor;
+import pl.patrykbober.soa.auth.Secured;
 import pl.patrykbober.soa.exception.RestException;
 import pl.patrykbober.soa.model.Company;
 import pl.patrykbober.soa.model.CompanyFilter;
@@ -54,12 +55,14 @@ public class CompanyController {
     }
 
     @POST
+    @Secured
     public Response createCompany(Company company) {
         Long id = companyService.create(company);
         return Response.status(Response.Status.CREATED).entity(id).build();
     }
 
     @PUT
+    @Secured
     @Path("/{id}")
     public Response updateCompany(@PathParam("id") Long id, Company company) {
         try {
@@ -71,6 +74,7 @@ public class CompanyController {
     }
 
     @DELETE
+    @Secured
     @Path("/{id}")
     public Response deleteCompany(@PathParam("id") Long id) {
         try {
@@ -82,6 +86,7 @@ public class CompanyController {
     }
 
     @POST
+    @Secured
     @Path("/{id}/employees")
     public Response addEmployee(@PathParam("id") Long id, Employee employee) {
         try {
