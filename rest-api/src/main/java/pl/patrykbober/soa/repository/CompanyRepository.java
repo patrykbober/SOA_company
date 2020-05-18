@@ -21,6 +21,9 @@ public class CompanyRepository {
 
     public Long create(Company company) {
         company.setId(companyIdCounter.incrementAndGet());
+        if (company.getEmployees() == null) {
+            company.setEmployees(new ArrayList<>());
+        }
         companyDB.put(company.getId(), company);
 
         return company.getId();
