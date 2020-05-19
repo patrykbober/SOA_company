@@ -152,9 +152,10 @@ public class RestApiConsumer {
             File file = new File("files/logo.jpg");
             boolean mkdirs = file.getParentFile().mkdirs();
             try {
-                if (!file.exists()) {
-                    boolean newFile = file.createNewFile();
+                if (file.exists()) {
+                    boolean delete = file.delete();
                 }
+                boolean newFile = file.createNewFile();
                 FileOutputStream outputStream = new FileOutputStream(file);
                 outputStream.write(logo);
                 System.out.println("Image logo.jpg has been saved to files/ directory");

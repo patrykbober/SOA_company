@@ -56,7 +56,7 @@ public class CompanyServiceRest {
 
     public byte[] getLogo(Long id) {
         Company company = findById(id);
-        return fileService.getFileBase64Content(company.getLogoPath());
+        return fileService.getLogoImageFromFile(company.getLogoPath());
     }
 
     public CompanyProto.Employees findEmployeesByCompanyId(Long companyId) {
