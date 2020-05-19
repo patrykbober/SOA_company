@@ -1,0 +1,24 @@
+syntax = "proto3";
+package companyprotobuf;
+
+option java_package = "pl.patrykbober.soa.protobuf3.dto";
+option java_outer_classname = "CompanyProto";
+
+message Company {
+  int64 id = 1;
+  string name = 2;
+  string city = 3;
+  repeated Employee employee = 5;
+}
+
+message Employee {
+  int64 id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string position = 4;
+  double salary = 5;
+}
+
+message Employees {
+  repeated Employee employee = 1;
+}

@@ -8,6 +8,7 @@ import pl.patrykbober.soa.exception.RestException;
 import pl.patrykbober.soa.model.Company;
 import pl.patrykbober.soa.model.CompanyFilter;
 import pl.patrykbober.soa.model.Employee;
+import pl.patrykbober.soa.protobuf3.dto.CompanyProto;
 import pl.patrykbober.soa.service.CompanyServiceRest;
 
 import javax.ejb.Stateless;
@@ -107,6 +108,18 @@ public class CompanyController {
                 outputStream.write(logo);
                 outputStream.flush();
             }).build();
+        } catch (RestException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+        }
+    }
+
+    @GET
+    @Path("/{id}/employees")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response getEmployeesByCompany(@PathParam("id") Long id) {
+        try {
+            CompanyProto.Employees employees = companyService.findEmployeesByCompanyId(id);
+            return Response.status(Response.Status.OK).entity(employees.toByteArray()).build();
         } catch (RestException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }

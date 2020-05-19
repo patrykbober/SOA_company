@@ -2,14 +2,13 @@ package pl.patrykbober.soa;
 
 import pl.patrykbober.soa.dto.CompanyDto;
 import pl.patrykbober.soa.dto.EmployeeDto;
+import pl.patrykbober.soa.protobuf3.dto.CompanyProto;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.*;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 public class RestApiConsumer {
@@ -33,6 +32,8 @@ public class RestApiConsumer {
         getLogo(1L);
         br();
         getFiltered();
+        br();
+        getEmployeesProto(2L);
     }
 
     private static void healthCheck() {
@@ -177,6 +178,34 @@ public class RestApiConsumer {
         if (response.getStatus() == Response.Status.OK.getStatusCode()) {
             List<CompanyDto> companies = response.readEntity(new GenericType<>() {});
             companies.forEach(System.out::println);
+        } else {
+            System.out.println(response.readEntity(String.class));
+        }
+    }
+
+    private static void getEmployeesProto(Long companyId) throws IOException {
+        System.out.println("Get employees (protocol buffer):");
+        Response response = client.target(BASE_URI)
+                .path("companies")
+                .path(companyId.toString())
+                .path("employees")
+                .request()
+                .header("accept", MediaType.APPLICATION_OCTET_STREAM)
+                .get();
+
+        System.out.println("Response status: " + response.getStatus());
+        if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+            InputStream employeesByteString = response.readEntity(InputStream.class);
+            CompanyProto.Employees employees = CompanyProto.Employees.parseFrom(employeesByteString);
+            employees.getEmployeeList().stream()
+                    .map(e -> EmployeeDto.builder()
+                            .id(e.getId())
+                            .firstName(e.getFirstName())
+                            .lastName(e.getLastName())
+                            .position(e.getPosition())
+                            .salary(e.getSalary())
+                            .build())
+                    .forEach(System.out::println);
         } else {
             System.out.println(response.readEntity(String.class));
         }

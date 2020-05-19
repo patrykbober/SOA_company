@@ -5,11 +5,13 @@ import pl.patrykbober.soa.exception.RestException;
 import pl.patrykbober.soa.model.Company;
 import pl.patrykbober.soa.model.CompanyFilter;
 import pl.patrykbober.soa.model.Employee;
+import pl.patrykbober.soa.protobuf3.dto.CompanyProto;
 import pl.patrykbober.soa.repository.CompanyRepository;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Stateless
 @NoArgsConstructor
@@ -55,6 +57,19 @@ public class CompanyServiceRest {
     public byte[] getLogo(Long id) {
         Company company = findById(id);
         return fileService.getFileBase64Content(company.getLogoPath());
+    }
+
+    public CompanyProto.Employees findEmployeesByCompanyId(Long companyId) {
+        List<CompanyProto.Employee> employees = companyRepository.getEmployeesByCompanyId(companyId).stream()
+                .map(e -> CompanyProto.Employee.newBuilder()
+                        .setId(e.getId())
+                        .setFirstName(e.getFirstName())
+                        .setLastName(e.getLastName())
+                        .setPosition(e.getPosition())
+                        .setSalary(e.getSalary())
+                        .build())
+                .collect(Collectors.toList());
+        return CompanyProto.Employees.newBuilder().addAllEmployee(employees).build();
     }
 
 }

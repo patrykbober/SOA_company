@@ -80,6 +80,14 @@ public class CompanyRepository {
         return employee.getId();
     }
 
+    public List<Employee> getEmployeesByCompanyId(Long companyId) {
+        if (companyDB.containsKey(companyId)) {
+            return companyDB.get(companyId).getEmployees();
+        } else {
+            throw new RestException("Resource not found");
+        }
+    }
+
     // initialize DB with sample data
     static {
         Employee employee1 = Employee.builder()
