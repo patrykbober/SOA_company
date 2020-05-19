@@ -2,6 +2,7 @@ package pl.patrykbober.soa;
 
 import pl.patrykbober.soa.dto.CompanyDto;
 import pl.patrykbober.soa.dto.EmployeeDto;
+import pl.patrykbober.soa.dto.MessageDto;
 import pl.patrykbober.soa.protobuf3.dto.CompanyProto;
 
 import javax.ws.rs.client.Client;
@@ -63,7 +64,7 @@ public class RestApiConsumer {
             List<CompanyDto> companies = response.readEntity(new GenericType<>() {});
             companies.forEach(System.out::println);
         } else {
-            System.out.println(response.readEntity(String.class));
+            System.out.println(response.readEntity(MessageDto.class).getMessage());
         }
     }
 
@@ -87,7 +88,7 @@ public class RestApiConsumer {
             System.out.println("Created entity with id: " + id);
             return id;
         } else {
-            System.out.println(response.readEntity(String.class));
+            System.out.println(response.readEntity(MessageDto.class).getMessage());
             throw new Exception();
         }
     }
@@ -115,7 +116,7 @@ public class RestApiConsumer {
             Long id = response.readEntity(Long.class);
             System.out.println("Added employee with id: " + id);
         } else {
-            System.out.println(response.readEntity(String.class));
+            System.out.println(response.readEntity(MessageDto.class).getMessage());
             throw new Exception();
         }
     }
@@ -133,7 +134,7 @@ public class RestApiConsumer {
             CompanyDto company = response.readEntity(CompanyDto.class);
             System.out.println(company);
         } else {
-            System.out.println(response.readEntity(String.class));
+            System.out.println(response.readEntity(MessageDto.class).getMessage());
         }
     }
 
@@ -163,7 +164,7 @@ public class RestApiConsumer {
                 e.printStackTrace();
             }
         } else {
-            System.out.println(response.readEntity(String.class));
+            System.out.println(response.readEntity(MessageDto.class).getMessage());
         }
     }
 
@@ -180,7 +181,7 @@ public class RestApiConsumer {
             List<CompanyDto> companies = response.readEntity(new GenericType<>() {});
             companies.forEach(System.out::println);
         } else {
-            System.out.println(response.readEntity(String.class));
+            System.out.println(response.readEntity(MessageDto.class).getMessage());
         }
     }
 
@@ -208,7 +209,7 @@ public class RestApiConsumer {
                             .build())
                     .forEach(System.out::println);
         } else {
-            System.out.println(response.readEntity(String.class));
+            System.out.println(response.readEntity(MessageDto.class).getMessage());
         }
     }
 
@@ -225,7 +226,7 @@ public class RestApiConsumer {
 
         System.out.println("Response status: " + response.getStatus());
         if (response.getStatus() == Response.Status.OK.getStatusCode()) {
-            String token = response.readEntity(String.class);
+            String token = response.readEntity(MessageDto.class).getMessage();
             System.out.println("Token: " + token);
             return token;
         } else {
