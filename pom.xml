@@ -34,6 +34,8 @@
     </licenses>
     <modules>
         <module>company-model</module>
+        <module>company-jpa</module>
+        <module>company-dao</module>
         <module>soap-api</module>
         <module>rest-api</module>
         <module>company-ear</module>
@@ -80,6 +82,14 @@
                 <version>${project.version}</version>
                 <type>ejb</type>
             </dependency>
+
+            <dependency>
+                <groupId>pl.patrykbober.soa</groupId>
+                <artifactId>company-jpa</artifactId>
+                <version>${project.version}</version>
+                <type>ejb</type>
+            </dependency>
+
 
             <dependency>
                 <groupId>pl.patrykbober.soa</groupId>
