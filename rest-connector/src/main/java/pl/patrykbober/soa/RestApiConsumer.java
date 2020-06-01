@@ -20,6 +20,8 @@ public class RestApiConsumer {
     public static void main(String[] args) throws Exception {
         healthCheck();
         br();
+        mockData();
+        br();
         listCompanies();
         br();
         String token = login();
@@ -30,7 +32,7 @@ public class RestApiConsumer {
         br();
         getById(companyId);
         br();
-        getLogo(1L);
+        getLogo(2L);
         br();
         getFiltered();
         br();
@@ -50,6 +52,16 @@ public class RestApiConsumer {
             System.out.println(response.getStatus());
             System.out.println("ERROR");
         }
+    }
+
+    private static void mockData() {
+        System.out.println("Mock data:");
+        Response response = client.target(BASE_URI)
+                .path("companies/mock")
+                .request()
+                .post(Entity.entity(null, MediaType.TEXT_PLAIN));
+
+        System.out.println(response.getStatus());
     }
 
     private static void listCompanies() {

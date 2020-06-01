@@ -15,6 +15,10 @@ public class FileServiceRest {
 
     public byte[] getLogoImageFromFile(String path) {
         log.info(".getLogoImageFromFile invoked for path " + path);
+        if (path == null || path.isEmpty()) {
+            log.severe("No logo image specified");
+            throw new RestException("No logo image specified for this entity");
+        }
         byte[] fileContent;
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
         try {

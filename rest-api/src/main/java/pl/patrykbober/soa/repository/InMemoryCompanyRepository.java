@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Log
 @Stateful
 @NoArgsConstructor
-public class CompanyRepository {
+public class InMemoryCompanyRepository {
     private static final Map<Long, Company> companyDB = new ConcurrentHashMap<>();
     private static final AtomicLong companyIdCounter = new AtomicLong();
     private static final AtomicLong employeeIdCounter = new AtomicLong();

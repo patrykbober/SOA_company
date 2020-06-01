@@ -138,7 +138,10 @@ public class CompanyController {
                 outputStream.flush();
             }).build();
         } catch (RestException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(new Message(e.getMessage())).build();
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(new Message(e.getMessage()))
+                    .type(MediaType.APPLICATION_JSON_TYPE)
+                    .build();
         }
     }
 
@@ -162,6 +165,14 @@ public class CompanyController {
     @ApiOperation(value = "Health check", response = String.class)
     public Response healthCheck() {
         return Response.ok(new Message("It works!")).build();
+    }
+
+    @POST
+    @Path("/mock")
+    @ApiOperation(value = "Mock sample data")
+    public Response mockData() {
+        companyService.mockData();
+        return Response.ok().build();
     }
 
 }

@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @XmlRootElement(name = "company")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = {"id", "name", "city", "logoPath", "employees"})
+@XmlType(propOrder = {"id", "name", "city", "logoPath", "employees", "buildings"})
 public class Company {
 
     private Long id;
@@ -27,5 +27,6 @@ public class Company {
     @XmlElementWrapper(name = "employees")
     @XmlElement(name = "employee")
     private List<Employee> employees = new ArrayList<>();
+    private List<Building> buildings = new ArrayList<>();
 
 }

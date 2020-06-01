@@ -2,19 +2,15 @@ package pl.patrykbober.soa.dto;
 
 import lombok.*;
 
-import java.util.List;
-
 @Data
 @Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompanyDto {
+public class BuildingDto {
 
     private Long id;
     private String name;
-    private String city;
-    private List<EmployeeDto> employees;
-    private List<BuildingDto> buildings;
+    private String address;
 
 }
